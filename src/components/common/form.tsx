@@ -10,18 +10,14 @@ interface DefaultRenderProps {
     type: string
 }
 
-class Form extends Component {//use loginform etc to inherit from this class, requires doSubmit
+class Form<T extends {data: {}, errors: {}}> extends Component<{}, T> {//use loginform etc to inherit from this class, requires doSubmit
     schema: any = {};
 
-    state = {
-        data: {},
-        errors: {}
-    }
     renderInput = ({path, name, label, type}: DefaultRenderProps) => {
         const {data, errors}: {data: any, errors: any} = this.state;
         return <Input key={path} name={name} type={type} label={label} value={data[path]} error={errors[path]} onChange={this.handleChange} />
     }
-    renderSelect = ({path, name, label, type}: DefaultRenderProps, options: any) => {
+    renderSelect = <T extends {_id: string, name: string}[]>({path, name, label, type}: DefaultRenderProps, options: T) => {
         const {data, errors}: {data: any, errors: any} = this.state;
         return <Select key={path} options={options} name={name} type={type} label={label} value={data[path]} error={errors[path]} onChange={this.handleChange} />        
     }

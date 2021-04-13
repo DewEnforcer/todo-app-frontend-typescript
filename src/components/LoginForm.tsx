@@ -19,7 +19,7 @@ interface LoginFormState {
     inputs: input[]
 }
 
-export default class LoginForm extends Form {
+export default class LoginForm extends Form<LoginFormState> {
     state = {
         data: {
             username: "",
