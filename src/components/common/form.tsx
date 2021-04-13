@@ -9,9 +9,15 @@ interface DefaultRenderProps {
     label: string, 
     type: string
 }
+interface Schema {
+    [key: string]: {} //object of string keys
+}
 
-class Form<T extends {data: {}, errors: {}}> extends Component<{}, T> {//use loginform etc to inherit from this class, requires doSubmit
-    schema: any = {};
+abstract class Form<T extends {data: {}, errors: {}, inputs: any[]}> extends Component<{}, T> {//use loginform etc to inherit from this class, requires doSubmit
+    abstract schema: Schema;
+    abstract state: T;
+    abstract doSubmit(): void;
+    abstract render(): JSX.Element;
 
     renderInput = ({path, name, label, type}: DefaultRenderProps) => {
         const {data, errors}: {data: any, errors: any} = this.state;
@@ -58,9 +64,6 @@ class Form<T extends {data: {}, errors: {}}> extends Component<{}, T> {//use log
         const data: any = {...this.state.data};
         data[input.name] = input.value;
         this.setState({data, errors});
-    }
-    doSubmit() {
-        throw new Error("doSubmit func not implemented!")
     }
 }
  

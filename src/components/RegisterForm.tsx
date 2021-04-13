@@ -43,6 +43,7 @@ export default class LoginForm extends Form<RegisterFormState> {
         email: Joi.string().email().required().label("E-mail"),
     }
 
+
     doSubmit() {
         const {username, password, email} = this.state.data;
         const regStatus = register(username, password, email);
